@@ -7,12 +7,15 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "bundle-android-release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle"
   },
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-video": "^5.1.1"
+    "react-native-fs": "^2.16.6",
+    "react-native-video": "^5.1.1",
+    "react-native-video-cache": "^2.0.5"
   },
   "devDependencies": {
     "@babel/core": "7.12.16",
