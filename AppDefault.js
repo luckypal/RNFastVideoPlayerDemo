@@ -26,7 +26,8 @@ const { width, height } = Dimensions.get("window");
 var styles = StyleSheet.create({
   back: {
     width,
-    height
+    height,
+    backgroundColor: '#333'
   },
   backgroundVideo: {
     width,
@@ -39,7 +40,7 @@ var styles = StyleSheet.create({
   controls: {
     position: 'absolute',
     flexDirection: 'row',
-    bottom: 100
+    bottom: 150
   },
   btnTouch: {
     marginHorizontal: 30,
@@ -109,8 +110,9 @@ class App extends Component {
   render() {
     const urls = videoUrls.map(url => convertToProxyURL(url));
     const { index } = this.state;
+    const posterUrl = 'https://d1peoxbuws2jej.cloudfront.net/character/5ba5447fb90e6a00192e15c6/a4bfbc20-ea25-4e02-9350-9d27ca5baa10-thumbnail.jpg';
 
-    console.log('Render', urls[index]);
+    console.log('Render', index, urls[index]);
 
     return (
       <SafeAreaView>
@@ -124,9 +126,11 @@ class App extends Component {
             onEnd={this.onEnd}
             resizeMode="cover"
             onLoad={this.onLoad}
+            poster={posterUrl}
+            posterResizeMode="cover"
             // onProgress={this.onProgress}
             // onBuffer={this.onBuffer}
-            controls />
+            controls={false} />
         </View>
         <View style={styles.controls}>
           <TouchableOpacity style={styles.btnTouch} onPress={this.onPrev}>
