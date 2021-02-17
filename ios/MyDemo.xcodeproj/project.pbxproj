@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* MyDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyDemoTests.m */; };
+		0516593C25DC94E5001EDF6C /* ExoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516593B25DC94E5001EDF6C /* ExoPlayerView.swift */; };
+		0516593F25DC9555001EDF6C /* ExoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0516593E25DC9555001EDF6C /* ExoPlayerView.m */; };
+		0516594125DC9A45001EDF6C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0516594025DC9A45001EDF6C /* AVFoundation.framework */; };
 		08DC15DF2B852A2852EA75AE /* libPods-MyDemo-MyDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FE339CF21BAFE2760C7B77 /* libPods-MyDemo-MyDemoTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -44,6 +47,10 @@
 		00E356EE1AD99517003FC87E /* MyDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MyDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDemoTests.m; sourceTree = "<group>"; };
+		0516593A25DC94E5001EDF6C /* MyDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		0516593B25DC94E5001EDF6C /* ExoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExoPlayerView.swift; sourceTree = "<group>"; };
+		0516593E25DC9555001EDF6C /* ExoPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExoPlayerView.m; sourceTree = "<group>"; };
+		0516594025DC9A45001EDF6C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		06FC1DA3A71FE936612A64A0 /* Pods-MyDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyDemo.release.xcconfig"; path = "Target Support Files/Pods-MyDemo/Pods-MyDemo.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MyDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MyDemo/AppDelegate.h; sourceTree = "<group>"; };
@@ -82,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0516594125DC9A45001EDF6C /* AVFoundation.framework in Frameworks */,
 				E017B8CCACC47945998A3BDE /* libPods-MyDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,9 +130,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0516593925DC9323001EDF6C /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				0516593B25DC94E5001EDF6C /* ExoPlayerView.swift */,
+				0516593E25DC9555001EDF6C /* ExoPlayerView.m */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* MyDemo */ = {
 			isa = PBXGroup;
 			children = (
+				0516593A25DC94E5001EDF6C /* MyDemo-Bridging-Header.h */,
+				0516593925DC9323001EDF6C /* modules */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -139,6 +158,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0516594025DC9A45001EDF6C /* AVFoundation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				3912BB9BCC06D50119444E34 /* libPods-MyDemo.a */,
@@ -194,7 +214,6 @@
 				9D1FEB30D00C7F99F61F1BC0 /* Pods-MyDemo-tvOSTests.debug.xcconfig */,
 				13CAF6F0B96A78640B8DFFF4 /* Pods-MyDemo-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -294,7 +313,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						DevelopmentTeam = 8MS674UTZQ;
+						LastSwiftMigration = 1160;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -568,7 +588,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0516593C25DC94E5001EDF6C /* ExoPlayerView.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				0516593F25DC9555001EDF6C /* ExoPlayerView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -610,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B72BF32CD48E22170DD84212 /* Pods-MyDemo-MyDemoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -633,6 +656,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 98083E9CBBF8603AF5789B3F /* Pods-MyDemo-MyDemoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = MyDemoTests/Info.plist;
@@ -656,6 +680,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8MS674UTZQ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MyDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -666,6 +691,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "MyDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -679,6 +705,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8MS674UTZQ;
 				INFOPLIST_FILE = MyDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -688,6 +715,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "MyDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

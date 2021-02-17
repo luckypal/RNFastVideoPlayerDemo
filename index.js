@@ -4,9 +4,9 @@
 
 import {AppRegistry} from 'react-native';
 // import App from './App';
-import App from './AppDefault';
+// import App from './AppDefault';
 // import App from './AppVideo';
-// import App from './AppExo';
+import App from './AppExo';
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);

@@ -87,11 +87,11 @@ class App extends Component {
     UIManager.dispatchViewManagerCommand(
       this.getVideoViewHandle(),
       index > 0 ? 'nextVideo' : 'prevVideo',
-      []
+      null
     );
-    this.setState({
-      index: this.state.index + 1
-    });
+    // this.setState({
+    //   index: this.state.index + 1
+    // });
   }
 
   onLoad = async () => {
@@ -115,6 +115,9 @@ class App extends Component {
 
   onEventSent = (event) => {
     console.log('Event', event.nativeEvent);
+    this.setState({
+      index: this.state.index + 1
+    });
   }
 
   render() {
@@ -128,9 +131,9 @@ class App extends Component {
         <StatusBar translucent hidden />
         <View style={styles.back}>
           <ExoPlayer
-            style={{ flex: 1, width: '100%', height: '100%' }}
+            style={{ flex: 1, width, height }}
             urls={urls}
-            index={index}
+            status={index % 2 == 0}
             ref={(ref) => { this.videoView = ref; }}
             onEventSent={this.onEventSent}
           />

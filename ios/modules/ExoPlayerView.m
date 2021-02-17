@@ -5,16 +5,16 @@
 //  Created by Lucky on 2/16/21.
 //
 
-#import "ExoPlayerView.h"
+#import <React/RCTViewManager.h>
+#import <React/RCTUIManager.h>
+#import <React/RCTBridgeModule.h>
+ 
+@interface RCT_EXTERN_MODULE(RCTExoPlayerViewManager, RCTViewManager)
+// RCT_EXPORT_VIEW_PROPERTY(url, NSString)
+ RCT_EXPORT_VIEW_PROPERTY(urls, NSArray<NSString *>)
+ RCT_EXPORT_VIEW_PROPERTY(onEventSent, RCTBubblingEventBlock)
 
-@implementation ExoPlayerView
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
+ RCT_EXTERN_METHOD(prevVideo:(nonnull NSNumber *)reactTag)
+ RCT_EXTERN_METHOD(nextVideo:(nonnull NSNumber *)reactTag)
 @end
+
