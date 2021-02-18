@@ -11,13 +11,13 @@ import AVFoundation
 @objc (ExoPlayerView)
 class ExoPlayerView: UIView {
   var _frame: CGRect? = nil;
-  var videoPlayer: AVPlayer;
+  var videoPlayer: AVQueuePlayer;
   var videoPlayerLayer: AVPlayerLayer;
   
   var playingIndex = 0;
   
   override init(frame: CGRect) {
-    videoPlayer = AVPlayer()
+    videoPlayer = AVQueuePlayer()
     videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
     
     super.init(frame: frame)
@@ -25,7 +25,7 @@ class ExoPlayerView: UIView {
   }
   
   required init?(coder aDecoder: NSCoder) {
-    videoPlayer = AVPlayer()
+    videoPlayer = AVQueuePlayer()
     videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
     
     super.init(coder: aDecoder)
@@ -33,6 +33,10 @@ class ExoPlayerView: UIView {
   }
   
   private func initView() {
+    if #available(iOS 10.0, tvOS 10.0, OSX 10.12, *) {
+        videoPlayer.automaticallyWaitsToMinimizeStalling = false
+    }
+    
     videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
     self.layer.addSublayer(videoPlayerLayer)
     
@@ -55,13 +59,15 @@ class ExoPlayerView: UIView {
       playingIndex = 0;
     }
     
-    let videoURL = URL(string: urls[playingIndex])
-    if (videoURL == nil) {
-      return;
+    for index in 0..<urls.count {
+      let videoURL = URL(string: urls[index])
+      if (videoURL == nil) {
+        continue;
+      }
+      let playItem = AVPlayerItem(url: videoURL!)
+      videoPlayer.insert(playItem, after: nil)
     }
     
-    let playItem = AVPlayerItem(url: videoURL!)
-    videoPlayer.replaceCurrentItem(with: playItem)
     videoPlayer.play()
   }
   
@@ -90,12 +96,12 @@ class ExoPlayerView: UIView {
   }
   
   func nextVideo() {
-    print("AAAAAAAA nextVideo");
     playingIndex += 1
     if (playingIndex >= urls.count) {
-      playingIndex = 0;
+      return;
+//      playingIndex = 0;
     }
-    setupView()
+    videoPlayer.advanceToNextItem()
     
     guard let onEventSent = self.onEventSent else { return }
     let params: [String : Any] = ["value1":"Next Video event...","value2":1]
@@ -103,16 +109,16 @@ class ExoPlayerView: UIView {
   }
   
   func prevVideo() {
-    print("AAAAAAAA nextVideo");
-    playingIndex -= 1
-    if (playingIndex < 0) {
-      playingIndex = urls.count - 1;
-    }
-    setupView()
+//    let items = videoPlayer.items();
+//    playingIndex -= 1
+//    if (playingIndex < 0) {
+//      playingIndex = urls.count - 1;
+//    }
+//    setupView()
     
-    guard let onEventSent = self.onEventSent else { return }
-    let params: [String : Any] = ["value1":"Prev Video event...","value2":1]
-    onEventSent(params)
+//    guard let onEventSent = self.onEventSent else { return }
+//    let params: [String : Any] = ["value1":"Prev Video event...","value2":1]
+//    onEventSent(params)
   }
 }
 
