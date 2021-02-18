@@ -11,6 +11,8 @@ import AVFoundation
 @objc (ExoPlayerView)
 class ExoPlayerView: UIView {
   var _frame: CGRect? = nil;
+  
+  var videoItems: [AVPlayerItem] = [];
   var videoPlayer: AVQueuePlayer;
   var videoPlayerLayer: AVPlayerLayer;
   
@@ -40,23 +42,17 @@ class ExoPlayerView: UIView {
     videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
     self.layer.addSublayer(videoPlayerLayer)
     
-    //    self.backgroundColor = UIColor.gray
-    //    self.isUserInteractionEnabled = true
     NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: videoPlayer.currentItem)
   }
   
   @objc
   func playerDidFinishPlaying(note: NSNotification) {
-    print("Video Finished")
-    nextVideo();
+    playNextVideo();
   }
   
-  private func setupView() {
+  private func initPlayerItems() {
     if (urls.count == 0) {
       return;
-    }
-    if (playingIndex >= urls.count) {
-      playingIndex = 0;
     }
     
     for index in 0..<urls.count {
@@ -64,11 +60,15 @@ class ExoPlayerView: UIView {
       if (videoURL == nil) {
         continue;
       }
-      let playItem = AVPlayerItem(url: videoURL!)
-      videoPlayer.insert(playItem, after: nil)
+      let playerItem = AVPlayerItem(url: videoURL!)
+      videoItems.append(playerItem)
     }
     
+    playingIndex = 0;
+    videoPlayer.insert(videoItems[0], after: nil)
     videoPlayer.play()
+    
+    updateVideoPlayerQueue()
   }
   
   override func reactSetFrame(_ frame: CGRect) {
@@ -81,7 +81,7 @@ class ExoPlayerView: UIView {
   @objc var urls: [String] = [] {
     didSet {
       if (urls.count > 0) {
-        self.setupView()
+        self.initPlayerItems()
       }
     }
   }
@@ -95,30 +95,52 @@ class ExoPlayerView: UIView {
     onEventSent(params)
   }
   
-  func nextVideo() {
+  func getPlayerItemFromIndex(_ index: Int) -> AVPlayerItem {
+    return videoItems[(index + videoItems.count) % videoItems.count];
+  }
+  
+  func updateVideoPlayerQueue() {
+    let items = videoPlayer.items()
+    if (items.count > 1) {
+      for index in 1..<items.count {
+        videoPlayer.remove(items[index])
+      }
+    }
+    
+    let prevItem = getPlayerItemFromIndex(playingIndex - 1)
+    let nextItem = getPlayerItemFromIndex(playingIndex + 1)
+    videoPlayer.insert(nextItem, after: nil)
+    videoPlayer.insert(prevItem, after: nil)
+  }
+  
+  func playNextVideo() {
     playingIndex += 1
     if (playingIndex >= urls.count) {
-      return;
-//      playingIndex = 0;
+      playingIndex = 0;
     }
+    
     videoPlayer.advanceToNextItem()
+    updateVideoPlayerQueue()
     
     guard let onEventSent = self.onEventSent else { return }
-    let params: [String : Any] = ["value1":"Next Video event...","value2":1]
+    let params: [String : Any] = ["desc":"Next Video event...","index": playingIndex]
     onEventSent(params)
   }
   
-  func prevVideo() {
-//    let items = videoPlayer.items();
-//    playingIndex -= 1
-//    if (playingIndex < 0) {
-//      playingIndex = urls.count - 1;
-//    }
-//    setupView()
+  func playPrevVideo() {
+    playingIndex -= 1
+    if (playingIndex < 0) {
+      playingIndex = urls.count - 1;
+    }
     
-//    guard let onEventSent = self.onEventSent else { return }
-//    let params: [String : Any] = ["value1":"Prev Video event...","value2":1]
-//    onEventSent(params)
+    let items = videoPlayer.items()
+    videoPlayer.remove(items[1])
+    videoPlayer.advanceToNextItem()
+    updateVideoPlayerQueue()
+    
+    guard let onEventSent = self.onEventSent else { return }
+    let params: [String : Any] = ["desc":"Prev Video event...","index": playingIndex]
+    onEventSent(params)
   }
 }
 
@@ -142,7 +164,7 @@ class RCTExoPlayerViewManager: RCTViewManager {
       if (!view.isKind(of: ExoPlayerView.self)) {
         print("Invalid view returned from registry, expecting RCTWebView, got: %@", view);
       } else {
-        view.prevVideo();
+        view.playPrevVideo();
       }
     }
   }
@@ -154,7 +176,7 @@ class RCTExoPlayerViewManager: RCTViewManager {
       if (!view.isKind(of: ExoPlayerView.self)) {
         print("Invalid view returned from registry, expecting RCTWebView, got: %@", view);
       } else {
-        view.nextVideo();
+        view.playNextVideo();
       }
     }
   }

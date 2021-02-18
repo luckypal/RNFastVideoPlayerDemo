@@ -87,10 +87,10 @@ class App extends Component {
 
   getVideoViewHandle = () => findNodeHandle(this.videoView)
 
-  onMove = (index) => {
+  onMove = (direction) => {
     UIManager.dispatchViewManagerCommand(
       this.getVideoViewHandle(),
-      index > 0 ? 'nextVideo' : 'prevVideo',
+      direction > 0 ? 'nextVideo' : 'prevVideo',
       null
     );
     // this.setState({
@@ -119,8 +119,9 @@ class App extends Component {
 
   onEventSent = (event) => {
     console.log('Event', event.nativeEvent);
+    const { index } = event.nativeEvent;
     this.setState({
-      index: this.state.index + 1
+      index
     });
   }
 
