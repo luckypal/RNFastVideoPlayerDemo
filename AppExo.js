@@ -19,7 +19,7 @@ import {
   findNodeHandle
 } from 'react-native';
 // import RNFS from 'react-native-fs';
-import convertToProxyURL, { convertAndStartDownloadAsync } from 'react-native-video-cache';
+import convertToProxyURL from 'react-native-video-cache';
 import ExoPlayer from './src/ExoPlayer';
 import { videoUrls } from './src/files';
 
@@ -63,10 +63,14 @@ class App extends Component {
   loadedList = {};
 
   state = {
+    urls: [],
     index: 0
   }
 
   componentDidMount() {
+    this.setState({
+      urls: videoUrls.map(url => convertToProxyURL(url))
+    });
   }
 
   onEnd = () => {
@@ -94,19 +98,19 @@ class App extends Component {
     // });
   }
 
-  onLoad = async () => {
-    let newIndex = this.state.index + 1 + videoUrls.length;
-    newIndex = newIndex % videoUrls.length;
-    let videoUrl = videoUrls[newIndex];
-    if (this.loadedList[videoUrl]) return;
+  // onLoad = async () => {
+  //   let newIndex = this.state.index + 1 + videoUrls.length;
+  //   newIndex = newIndex % videoUrls.length;
+  //   let videoUrl = videoUrls[newIndex];
+  //   if (this.loadedList[videoUrl]) return;
 
-    let cachedVideoUrl = convertToProxyURL(videoUrl);
-    if (!cachedVideoUrl.startsWith('file')) {
-      this.loadedList[videoUrl] = true;
+  //   let cachedVideoUrl = convertToProxyURL(videoUrl);
+  //   if (!cachedVideoUrl.startsWith('file')) {
+  //     this.loadedList[videoUrl] = true;
 
-      await convertAndStartDownloadAsync(videoUrl);
-    }
-  }
+  //     await convertAndStartDownloadAsync(videoUrl);
+  //   }
+  // }
 
   onProgress = ({ currentTime, playableDuration }) => {
     if (currentTime >= playableDuration - 0.5) {
@@ -121,8 +125,7 @@ class App extends Component {
   }
 
   render() {
-    const urls = videoUrls.map(url => convertToProxyURL(url));
-    const { index } = this.state;
+    const { index, urls } = this.state;
 
     console.log('Render', index);
 

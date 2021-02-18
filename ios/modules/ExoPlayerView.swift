@@ -33,6 +33,7 @@ class ExoPlayerView: UIView {
   }
   
   private func initView() {
+    videoPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
     self.layer.addSublayer(videoPlayerLayer)
     
     //    self.backgroundColor = UIColor.gray
@@ -47,6 +48,13 @@ class ExoPlayerView: UIView {
   }
   
   private func setupView() {
+    if (urls.count == 0) {
+      return;
+    }
+    if (playingIndex >= urls.count) {
+      playingIndex = 0;
+    }
+    
     let videoURL = URL(string: urls[playingIndex])
     if (videoURL == nil) {
       return;
@@ -61,6 +69,7 @@ class ExoPlayerView: UIView {
     super.reactSetFrame(frame)
     _frame = frame
     videoPlayerLayer.frame = frame
+    print(frame)
   }
   
   @objc var urls: [String] = [] {
