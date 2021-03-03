@@ -9,7 +9,8 @@ const componentName = Platform.select({
 var viewProps = {
   name: componentName,
   propTypes: {
-    url: PropTypes.string,
+    urls: PropTypes.array,
+    index: PropTypes.number,
     onEventSent: PropTypes.func,
     ...ViewPropTypes,
   }

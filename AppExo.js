@@ -47,7 +47,8 @@ var styles = StyleSheet.create({
     marginHorizontal: 30,
     backgroundColor: '#aaa',
     borderRadius: 4,
-    padding: 3
+    padding: 5,
+    paddingHorizontal: 10
   },
   btnText: {
     color: 'white',
@@ -70,7 +71,7 @@ class App extends Component {
   componentDidMount() {
     this.setState({
       urls: videoUrls.map(url => convertToProxyURL(url))
-    });
+    }, () => console.log(this.state.urls));
   }
 
   onEnd = () => {
@@ -137,7 +138,7 @@ class App extends Component {
           <ExoPlayer
             style={{ flex: 1, width, height }}
             urls={urls}
-            status={index % 2 == 0}
+            index={index}
             ref={(ref) => { this.videoView = ref; }}
             onEventSent={this.onEventSent}
           />

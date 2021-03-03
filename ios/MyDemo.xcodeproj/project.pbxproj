@@ -11,6 +11,7 @@
 		0516593C25DC94E5001EDF6C /* ExoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516593B25DC94E5001EDF6C /* ExoPlayerView.swift */; };
 		0516593F25DC9555001EDF6C /* ExoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0516593E25DC9555001EDF6C /* ExoPlayerView.m */; };
 		0516594125DC9A45001EDF6C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0516594025DC9A45001EDF6C /* AVFoundation.framework */; };
+		0528C8C825E033DC0041C96F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0528C8C725E033DC0041C96F /* Foundation.framework */; };
 		08DC15DF2B852A2852EA75AE /* libPods-MyDemo-MyDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FE339CF21BAFE2760C7B77 /* libPods-MyDemo-MyDemoTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -51,6 +52,7 @@
 		0516593B25DC94E5001EDF6C /* ExoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExoPlayerView.swift; sourceTree = "<group>"; };
 		0516593E25DC9555001EDF6C /* ExoPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExoPlayerView.m; sourceTree = "<group>"; };
 		0516594025DC9A45001EDF6C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0528C8C725E033DC0041C96F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		06FC1DA3A71FE936612A64A0 /* Pods-MyDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyDemo.release.xcconfig"; path = "Target Support Files/Pods-MyDemo/Pods-MyDemo.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MyDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MyDemo/AppDelegate.h; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0516594125DC9A45001EDF6C /* AVFoundation.framework in Frameworks */,
+				0528C8C825E033DC0041C96F /* Foundation.framework in Frameworks */,
 				E017B8CCACC47945998A3BDE /* libPods-MyDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +161,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0528C8C725E033DC0041C96F /* Foundation.framework */,
 				0516594025DC9A45001EDF6C /* AVFoundation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,

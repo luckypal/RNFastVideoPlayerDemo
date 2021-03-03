@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import Foundation
 
 @objc (ExoPlayerView)
 class ExoPlayerView: UIView {
@@ -62,13 +63,11 @@ class ExoPlayerView: UIView {
       }
       let playerItem = AVPlayerItem(url: videoURL!)
       videoItems.append(playerItem)
+      videoPlayer.insert(playerItem, after: nil)
     }
     
     playingIndex = 0;
-    videoPlayer.insert(videoItems[0], after: nil)
     videoPlayer.play()
-    
-    updateVideoPlayerQueue()
   }
   
   override func reactSetFrame(_ frame: CGRect) {
@@ -78,8 +77,15 @@ class ExoPlayerView: UIView {
     print(frame)
   }
   
+  @objc var index: NSNumber = -1 {
+    didSet {
+      print("Intro Index  %d", index)
+    }
+  }
+  
   @objc var urls: [String] = [] {
     didSet {
+      print("Intro URLs   URL Set  %d", urls.count)
       if (urls.count > 0) {
         self.initPlayerItems()
       }
@@ -91,26 +97,18 @@ class ExoPlayerView: UIView {
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let onEventSent = self.onEventSent else { return }
     
-    let params: [String : Any] = ["value1":"react demo","value2":1]
+//    if ((videoPlayer.rate != 0) && (videoPlayer.error == nil)) {
+//      videoPlayer.pause()
+//    } else {
+//      videoPlayer.play()
+//    }
+    
+    let params: [String : Any] = ["desc":"Touch Video event...","index": playingIndex]
     onEventSent(params)
   }
   
   func getPlayerItemFromIndex(_ index: Int) -> AVPlayerItem {
     return videoItems[(index + videoItems.count) % videoItems.count];
-  }
-  
-  func updateVideoPlayerQueue() {
-    let items = videoPlayer.items()
-    if (items.count > 1) {
-      for index in 1..<items.count {
-        videoPlayer.remove(items[index])
-      }
-    }
-    
-    let prevItem = getPlayerItemFromIndex(playingIndex - 1)
-    let nextItem = getPlayerItemFromIndex(playingIndex + 1)
-    videoPlayer.insert(nextItem, after: nil)
-    videoPlayer.insert(prevItem, after: nil)
   }
   
   func playNextVideo() {
@@ -120,7 +118,8 @@ class ExoPlayerView: UIView {
     }
     
     videoPlayer.advanceToNextItem()
-    updateVideoPlayerQueue()
+    let prevItem = getPlayerItemFromIndex(playingIndex - 1)
+    videoPlayer.insert(prevItem, after: nil)
     
     guard let onEventSent = self.onEventSent else { return }
     let params: [String : Any] = ["desc":"Next Video event...","index": playingIndex]
@@ -128,15 +127,18 @@ class ExoPlayerView: UIView {
   }
   
   func playPrevVideo() {
+    let prevItem = getPlayerItemFromIndex(playingIndex - 1)
+    let curItem = getPlayerItemFromIndex(playingIndex)
+    videoPlayer.remove(prevItem)
+    
+    videoPlayer.insert(prevItem, after: videoPlayer.currentItem)
+    videoPlayer.advanceToNextItem()
+    videoPlayer.insert(curItem, after: prevItem)
+    
     playingIndex -= 1
     if (playingIndex < 0) {
       playingIndex = urls.count - 1;
     }
-    
-    let items = videoPlayer.items()
-    videoPlayer.remove(items[1])
-    videoPlayer.advanceToNextItem()
-    updateVideoPlayerQueue()
     
     guard let onEventSent = self.onEventSent else { return }
     let params: [String : Any] = ["desc":"Prev Video event...","index": playingIndex]

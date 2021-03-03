@@ -10,7 +10,7 @@
 #import <React/RCTBridgeModule.h>
  
 @interface RCT_EXTERN_MODULE(RCTExoPlayerViewManager, RCTViewManager)
-// RCT_EXPORT_VIEW_PROPERTY(url, NSString)
+ RCT_EXPORT_VIEW_PROPERTY(index, NSNumber)
  RCT_EXPORT_VIEW_PROPERTY(urls, NSArray<NSString *>)
  RCT_EXPORT_VIEW_PROPERTY(onEventSent, RCTBubblingEventBlock)
 
